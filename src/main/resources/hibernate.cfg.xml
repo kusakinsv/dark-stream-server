@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/dark-stream</property>
+        <property name="hibernate.connection.username">admin</property>
+        <property name="hibernate.connection.password">123450000</property>
+        <property name="hbm2ddl.auto">update</property>
+        <property name="show_sql">true</property> <!-- показывает sql команды в консоли-->
+        <mapping class="ru.dark.stream.entities.MusicTrack"/>
+        <mapping class="ru.dark.stream.entities.PlaylistMusicTrack"/>
+<!--        <mapping class="ru.dark.stream.entities.Pattern"/>-->
+<!--        <mapping class="ru.one.learning.hiber.models.ProductCategory"/>-->
+<!--        <mapping class="ru.one.learning.hiber.models.Order"/>-->
+    </session-factory>
+</hibernate-configuration>
