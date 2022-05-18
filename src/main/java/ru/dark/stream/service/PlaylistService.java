@@ -11,7 +11,7 @@ import ru.dark.stream.entities.PlaylistMusicTrack;
 
 import java.math.BigInteger;
 
-public class PlaylistCRUDService {
+public class PlaylistService {
 
     MusicTrackCRUDService musicTrackCRUDService = new MusicTrackCRUDService();
 

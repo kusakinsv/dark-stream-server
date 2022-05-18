@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.dark.stream.entities.MusicTrack;
 import ru.dark.stream.entities.PlaylistMusicTrack;
 import ru.dark.stream.service.MusicTrackCRUDService;
-import ru.dark.stream.service.PlaylistCRUDService;
+import ru.dark.stream.service.PlaylistService;
 
 @SpringBootApplication
 public class ServerMainApplicationTest {
@@ -32,7 +32,7 @@ public class ServerMainApplicationTest {
 //		musicTrackCRUDService.create(musicTrack2);
 //		musicTrackCRUDService.delete(musicTrack2);
 
-		PlaylistCRUDService playlistservice = new PlaylistCRUDService();
+		PlaylistService playlistservice = new PlaylistService();
 
 //		playlistservice.addToPlayList(musicTrack);
 		playlistservice.deleteFromPlayList(musicTrack);

@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class ServiceLayer {
-    static Session session;
 
     public void searchMusic() {
 
@@ -28,6 +27,7 @@ public class ServiceLayer {
     void addMusicToPlayList() {
 
     }
+
 
 //    MusicTrack checkAndAddMusicToTrackStore(MusicRequest musicRequest) {
 //        String pattern = musicRequest.getPattern();
@@ -71,44 +71,4 @@ public class ServiceLayer {
 //
 //        return musicTrack;
 //    }
-
-    public void addTrackToPlayList(MusicRequest musicRequest) {
-
-
-        List<MusicTrack> musicMusicTrackList = new ArrayList<>();
-        String trackName = musicRequest.getTrackName();
-        String pattern = musicRequest.getPattern();
-        MusicTrack musicTrack = new MusicTrack();
-//                musicRequest.getTrackName(),
-//                musicRequest.getAuthor(),
-//                musicRequest.getDuration(),
-//                musicRequest.getUrl());
-        session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            session.beginTransaction();
-            List<PlaylistMusicTrack> playlistMusicTrackList = null;
-            try {
-                Criteria criteria = session.createCriteria(PlaylistMusicTrack.class);
-                playlistMusicTrackList = (List<PlaylistMusicTrack>) criteria.list();
-            } catch (Exception e) {
-            }
-            if (playlistMusicTrackList == null) {
-                playlistMusicTrackList = new ArrayList<>();
-            }
-            int number = playlistMusicTrackList.size();
-            PlaylistMusicTrack playlistMusicTrack = new PlaylistMusicTrack();
-            playlistMusicTrack.setMusicTrack(musicTrack);
-            playlistMusicTrack.setNumber(number + 1);
-        } catch (Exception e) {
-        }
-    }
-
-    public void replaceTrack() {
-
-    }
-
-    public void deleteFromPlayList() {
-
-    }
-
 }
