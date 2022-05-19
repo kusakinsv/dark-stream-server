@@ -1,11 +1,13 @@
 package ru.dark.stream.entities;
 
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.List;
 @Data
 @Entity
+@Getter
 @Table(name = "playlist_music_track")
 public class PlaylistMusicTrack {
 

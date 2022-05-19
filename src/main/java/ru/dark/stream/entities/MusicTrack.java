@@ -11,7 +11,6 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-//@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "music_track")
 public class MusicTrack {
@@ -26,15 +25,11 @@ public class MusicTrack {
     @Column(name = "author")
     String author;
 
-    @Column(name = "url")
+    @Column(name = "url", unique = true)
     String url;
 
     @Column(name = "duration")
     String duration;
-
-//    @OneToMany
-//    @JoinColumn(name = "music_track", referencedColumnName = "id")
-//    Set<Pattern> patterns;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "playlist_music_track", referencedColumnName = "id")

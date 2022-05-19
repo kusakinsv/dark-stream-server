@@ -1,32 +1,38 @@
 package ru.dark.stream.service;
 
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.dark.stream.HibernateUtil;
 import ru.dark.stream.entities.MusicTrack;
-import ru.dark.stream.entities.PlaylistMusicTrack;
+import ru.dark.stream.mapper.MusicTrackMapper;
 import ru.dark.stream.model.MusicRequest;
 
-import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @Service
+@RequiredArgsConstructor
 public class ServiceLayer {
+
+    private final PlaylistService playlistService;
+    private final MusicTrackService musicTrackService;
+    private final MusicTrackMapper musicTrackMapper;
 
     public void searchMusic() {
 
     }
 
-
-    void addMusicToPlayList() {
-
+    public void addTrackToPlayList(MusicRequest musicRequest) {
+        MusicTrack musicTrack = musicTrackMapper.toMusicTrack(musicRequest);
+        playlistService.addToPlayList(musicTrack);
+        if (!musicTrackService.trackIsPresent(musicTrack)) {
+            musicTrackService.create(musicTrack);
+        }
     }
+
+    public void deletePlaylistTrackByNumber(int number) {
+        playlistService.deleteByNumber(number);
+    }
+
+
+}
 
 
 //    MusicTrack checkAndAddMusicToTrackStore(MusicRequest musicRequest) {
@@ -71,4 +77,4 @@ public class ServiceLayer {
 //
 //        return musicTrack;
 //    }
-}
+

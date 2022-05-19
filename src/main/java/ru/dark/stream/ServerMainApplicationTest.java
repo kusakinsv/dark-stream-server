@@ -4,8 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.dark.stream.entities.MusicTrack;
 import ru.dark.stream.entities.PlaylistMusicTrack;
-import ru.dark.stream.service.MusicTrackCRUDService;
-import ru.dark.stream.service.PlaylistService;
+import ru.dark.stream.service.MusicTrackService;
 
 @SpringBootApplication
 public class ServerMainApplicationTest {
@@ -26,16 +25,15 @@ public class ServerMainApplicationTest {
 		musicTrack2.setAuthor("Би-2");
 		musicTrack2.setTrackName("А мы не ангелы парень");
 		musicTrack2.setDuration("03:11");
-		musicTrack2.setUrl("https://rus...");
-		MusicTrackCRUDService musicTrackCRUDService = new MusicTrackCRUDService();
-//		musicTrackCRUDService.update(musicTrack, musicTrack2);
-//		musicTrackCRUDService.create(musicTrack2);
-//		musicTrackCRUDService.delete(musicTrack2);
+		musicTrack2.setUrl("https://r1.");
+		MusicTrackService musicTrackService = new MusicTrackService();
+//		musicTrackService.update(musicTrack, musicTrack2);
+//		musicTrackService.create(musicTrack2);
 
-		PlaylistService playlistservice = new PlaylistService();
+//		PlaylistService playlistservice = new PlaylistService();
 
 //		playlistservice.addToPlayList(musicTrack);
-		playlistservice.deleteFromPlayList(musicTrack);
+//		playlistservice.deleteFromPlayList(musicTrack);
 
 	}
 

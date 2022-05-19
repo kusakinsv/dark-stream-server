@@ -30,8 +30,11 @@ public class Listener {
             message = message.substring(4);
             ObjectMapper objectMapper = new ObjectMapper();
             object = objectMapper.readValue(message, MusicRequest.class);
-            MusicRequest request = (MusicRequest) object;
-            serviceLayer.addTrackToPlayList(request);
+            MusicRequest musicRequest = (MusicRequest) object;
+            serviceLayer.addTrackToPlayList(musicRequest);
+        } else if(message.startsWith("DEL_")) {
+            message = message.substring(4);
+            serviceLayer.deletePlaylistTrackByNumber(Integer.parseInt(message));
         }
         System.out.println(object.toString());
     }
