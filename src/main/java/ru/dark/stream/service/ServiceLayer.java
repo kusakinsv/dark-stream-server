@@ -7,6 +7,9 @@ import ru.dark.stream.entities.MusicTrack;
 import ru.dark.stream.mapper.MusicTrackMapper;
 import ru.dark.stream.model.MusicRequest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ServiceLayer {
@@ -29,6 +32,11 @@ public class ServiceLayer {
 
     public void deletePlaylistTrackByNumber(int number) {
         playlistService.deleteByNumber(number);
+    }
+
+    public List<MusicTrack> getPlayList() {
+
+        return new ArrayList<>();
     }
 
 
