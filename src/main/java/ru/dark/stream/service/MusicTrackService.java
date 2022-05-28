@@ -31,12 +31,11 @@ public class MusicTrackService {
         return findedTrack;
     }
 
-    public List<MusicTrack> findAll(MusicTrack musicTrack) {
+    public List<MusicTrack> findAll() {
+        System.out.println("Ищем...");
         session.beginTransaction();
         Criteria criteria = session.createCriteria(MusicTrack.class);
-        criteria.add(Restrictions.eq("url", musicTrack.getUrl()));
-        List<MusicTrack> findedTracks = (List<MusicTrack>) criteria.add(Restrictions.eq("trackName", musicTrack.getTrackName()))
-                .list();
+        List<MusicTrack> findedTracks = criteria.list();
         session.getTransaction().commit();
         return findedTracks;
     }
@@ -47,7 +46,7 @@ public class MusicTrackService {
         musicTrack.setTrackName(newTrack.getTrackName());
         musicTrack.setAuthor(newTrack.getAuthor());
         musicTrack.setDuration(newTrack.getDuration());
-        musicTrack.setPlaylistMusicTrack(newTrack.getPlaylistMusicTrack());
+//        musicTrack.setPlaylistMusicTrack(newTrack.getPlaylistMusicTrack());
         musicTrack.setUrl(newTrack.getUrl());
         session.update(musicTrack);
         session.getTransaction().commit();

@@ -1,26 +1,33 @@
 package ru.dark.stream.service;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.CriteriaQuery;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.dark.stream.HibernateUtil;
 import ru.dark.stream.entities.MusicTrack;
 import ru.dark.stream.entities.PlaylistMusicTrack;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigInteger;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class PlaylistService {
 
-    private final MusicTrackService musicTrackService;
+    @Autowired
+    private MusicTrackService musicTrackService;
 
     static Session session = HibernateUtil.getSessionFactory().openSession();
 
@@ -79,15 +86,19 @@ public class PlaylistService {
 
 
     public List<PlaylistMusicTrack> findAll() {
-        String sql = "select * from playlist_music_track";
-        NativeQuery query = session.createNativeQuery(sql);
-        List<PlaylistMusicTrack> unsortedList = (List<PlaylistMusicTrack>) query.list();
-        return unsortedList.stream().sorted(Comparator.comparingInt(PlaylistMusicTrack::getNumber)).collect(Collectors.toList());
+        Criteria criteria = session.createCriteria(PlaylistMusicTrack.class);
+        List<PlaylistMusicTrack> unsortedList = criteria.list();
+        return unsortedList;
     }
 
     public int getCountOfCompositions() {
         BigInteger count = (BigInteger) session.createSQLQuery("select count('number') from music_track;")
                 .uniqueResult();
         return count.intValue();
+    }
+
+    public List<MusicTrack> getTracksFromPlayList(){
+
+        return null;
     }
 }

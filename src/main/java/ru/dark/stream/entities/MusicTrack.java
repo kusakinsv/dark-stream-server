@@ -34,16 +34,16 @@ public class MusicTrack {
     @Column(name = "duration")
     String duration;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "playlist_music_track", referencedColumnName = "id")
-    PlaylistMusicTrack playlistMusicTrack;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "playlist_music_track", referencedColumnName = "id")
+//    PlaylistMusicTrack playlistMusicTrack;
 
     public MusicTrack(long id, String trackName, String author, String url, String duration, PlaylistMusicTrack playlistMusicTrack) {
         this.trackName = trackName;
         this.author = author;
         this.duration = duration;
         this.url = url;
-        this.playlistMusicTrack = playlistMusicTrack;
+//        this.playlistMusicTrack = playlistMusicTrack;
     }
 
     public String getTrackInfo(){
@@ -58,7 +58,7 @@ public class MusicTrack {
                 ", author='" + author + '\'' +
                 ", url='" + url + '\'' +
                 ", duration='" + duration + '\'' +
-                ", playlistMusicTrack=" + playlistMusicTrack +
+//                ", playlistMusicTrack=" + playlistMusicTrack +
                 '}';
     }
 }

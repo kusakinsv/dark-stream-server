@@ -16,12 +16,16 @@ public class Listener {
     @Autowired
     ServiceLayer serviceLayer;
 
+    @Autowired
+    RabbitController rabbitController;
+
+    @Autowired
+    ObjectMapper objectMapper;
+
     @RabbitListener(queues = "dark-stream-queue-server")
     public void processQueue1(String message) throws JsonProcessingException {
         System.out.println(("Received from queue: " + message));
         interpritate(message);
-
-
     }
 
     void interpritate(String message) throws JsonProcessingException {
@@ -35,7 +39,10 @@ public class Listener {
         } else if(message.startsWith("DEL_")) {
             message = message.substring(4);
             serviceLayer.deletePlaylistTrackByNumber(Integer.parseInt(message));
+        } else if(message.startsWith("PLAYLIST")){
+            String serializedValue = serviceLayer.getPlayList();
+            serializedValue = "PLAYLIST_" + serializedValue;
+            rabbitController.template.convertAndSend("dark-stream-queue-clients", serializedValue);
         }
-        System.out.println(object.toString());
     }
 }
