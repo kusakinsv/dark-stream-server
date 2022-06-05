@@ -30,6 +30,7 @@ public class Listener {
 
     void interpritate(String message) throws JsonProcessingException {
         Object object = null;
+        System.out.println("ПЕРЕДАНО В ИНТЕРПРЕТАТОР:\n" + message);
         if (message.startsWith("ADD_")) {
             message = message.substring(4);
             ObjectMapper objectMapper = new ObjectMapper();

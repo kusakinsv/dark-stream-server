@@ -84,6 +84,7 @@ public class PlaylistService {
     }
 
     public void deleteFromPlayListByNumber(int number) {
+        System.out.println("Удаляем номер: " + number);
         session.beginTransaction();
         Criteria criteria = session.createCriteria(PlaylistMusicTrack.class);
         criteria.add(Restrictions.eq("number", number));
@@ -95,9 +96,6 @@ public class PlaylistService {
         session.getTransaction().commit();
         renumeratePlayList();
     }
-
-
-
 
     public List<PlaylistMusicTrack> findAll() {
         Criteria criteria = session.createCriteria(PlaylistMusicTrack.class);
