@@ -21,9 +21,4 @@ public class RabbitController {
         return "Emit to queue";
     }
 
-
-    void addTrack(){
-
-    }
-
 }

@@ -47,25 +47,34 @@ public class PlaylistService {
     }
 
     public void addToPlayList(MusicTrack musicTrack) {
+
         PlaylistMusicTrack playlistMusicTrack = new PlaylistMusicTrack();
-        MusicTrack trackForFound = musicTrackService.find(musicTrack);
+        MusicTrack trackForFound = null;
+        trackForFound = musicTrackService.find(musicTrack);
         if (trackForFound == null){
             playlistMusicTrack.setMusicTrack(musicTrack);
             playlistMusicTrack.setNumber(getCountOfCompositions() + 1);
-            session.beginTransaction();
-            session.save(playlistMusicTrack);
-            session.getTransaction().commit();
             System.out.println("CREATED: " + playlistMusicTrack.getMusicTrack().getTrackInfo() + " " + playlistMusicTrack.getNumber());
         }
         else {
             playlistMusicTrack.setMusicTrack(trackForFound);
             playlistMusicTrack.setNumber(getCountOfCompositions() + 1);
-            session.beginTransaction();
-            session.save(playlistMusicTrack);
-            session.getTransaction().commit();
             System.out.println("ДАННЫЙ ТРЕК УЖЕ ЕСТЬ: " + playlistMusicTrack.getMusicTrack().getTrackInfo() + " " + playlistMusicTrack.getNumber());
         }
+        PlaylistMusicTrack findedplaylist = find(playlistMusicTrack);
+        if (findedplaylist == null) findedplaylist=playlistMusicTrack;
+        session.beginTransaction();
+        session.save(findedplaylist);
+        session.getTransaction().commit();
     }
+
+    public PlaylistMusicTrack find(PlaylistMusicTrack playlistMusicTrack) {
+        Criteria criteria = session.createCriteria(PlaylistMusicTrack.class);
+        criteria.add(Restrictions.eq("musicTrack", playlistMusicTrack.getMusicTrack()));
+        PlaylistMusicTrack findedPlayListTrack = (PlaylistMusicTrack) criteria.uniqueResult();
+        return findedPlayListTrack;
+    }
+
 
     public void deleteFromPlayList(MusicTrack musicTrack) {
         musicTrack = musicTrackService.find(musicTrack);

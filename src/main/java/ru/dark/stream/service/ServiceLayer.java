@@ -31,9 +31,9 @@ public class ServiceLayer {
     public void addTrackToPlayList(MusicRequest musicRequest) {
         MusicTrack musicTrack = musicTrackMapper.toMusicTrack(musicRequest);
         playlistService.addToPlayList(musicTrack);
-        if (!musicTrackService.trackIsPresent(musicTrack)) {
-            musicTrackService.create(musicTrack);
-        }
+//        if (!musicTrackService.trackIsPresent(musicTrack)) {
+//            musicTrackService.create(musicTrack);
+//        }
     }
 
     public void deletePlaylistTrackByNumber(int number) {
