@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -34,8 +35,9 @@ public class MusicTrack {
     @Column(name = "duration")
     String duration;
 
-//    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "playlist_music_track", referencedColumnName = "id")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinTable(name = "joiner")
 //    PlaylistMusicTrack playlistMusicTrack;
 
     public MusicTrack(long id, String trackName, String author, String url, String duration, PlaylistMusicTrack playlistMusicTrack) {

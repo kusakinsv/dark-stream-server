@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 @Entity
 @Getter
+
 @Table(name = "playlist_music_track")
 public class PlaylistMusicTrack {
 
@@ -18,8 +19,10 @@ public class PlaylistMusicTrack {
         @Column(name = "number", unique = true)
         int number;
 
+
+//        @Column(name = "music_track")
+//        @JoinTable(name = "joiner")
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "music_track", referencedColumnName = "id")
         MusicTrack musicTrack;
-
     }

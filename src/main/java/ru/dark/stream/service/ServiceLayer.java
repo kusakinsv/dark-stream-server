@@ -37,7 +37,7 @@ public class ServiceLayer {
     }
 
     public void deletePlaylistTrackByNumber(int number) {
-        playlistService.deleteByNumber(number);
+        playlistService.deleteFromPlayListByNumber(number);
     }
 
     public String getPlayList() throws JsonProcessingException {

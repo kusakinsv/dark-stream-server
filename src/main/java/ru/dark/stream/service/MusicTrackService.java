@@ -70,6 +70,15 @@ public class MusicTrackService {
         System.out.println("DELETED: " + findedTrack.getTrackInfo());
     }
 
+    public void deleteTrackByNumber(Integer number) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(MusicTrack.class);
+        MusicTrack findedTrack = (MusicTrack) criteria.add(Restrictions.eq("number", (long) number)).uniqueResult();
+        session.delete(findedTrack);
+        session.getTransaction().commit();
+        System.out.println("DELETED: " + findedTrack.getTrackInfo());
+    }
+
     public boolean trackIsPresent(MusicTrack musicTrack) {
         return find(musicTrack) != null;
     }

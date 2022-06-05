@@ -41,21 +41,30 @@ public class PlaylistService {
                 track.setNumber(nextnumber);
                 nextnumber++;
                 session.update(track);
-                session.getTransaction().commit();
             }
         }
         session.getTransaction().commit();
     }
 
-
     public void addToPlayList(MusicTrack musicTrack) {
         PlaylistMusicTrack playlistMusicTrack = new PlaylistMusicTrack();
-        playlistMusicTrack.setMusicTrack(musicTrack);
-        playlistMusicTrack.setNumber(getCountOfCompositions() + 1);
-        session.beginTransaction();
-        session.save(playlistMusicTrack);
-        session.getTransaction().commit();
-        System.out.println("CREATED: " + playlistMusicTrack.getMusicTrack().getTrackInfo() + " " + playlistMusicTrack.getNumber());
+        MusicTrack trackForFound = musicTrackService.find(musicTrack);
+        if (trackForFound == null){
+            playlistMusicTrack.setMusicTrack(musicTrack);
+            playlistMusicTrack.setNumber(getCountOfCompositions() + 1);
+            session.beginTransaction();
+            session.save(playlistMusicTrack);
+            session.getTransaction().commit();
+            System.out.println("CREATED: " + playlistMusicTrack.getMusicTrack().getTrackInfo() + " " + playlistMusicTrack.getNumber());
+        }
+        else {
+            playlistMusicTrack.setMusicTrack(trackForFound);
+            playlistMusicTrack.setNumber(getCountOfCompositions() + 1);
+            session.beginTransaction();
+            session.save(playlistMusicTrack);
+            session.getTransaction().commit();
+            System.out.println("ДАННЫЙ ТРЕК УЖЕ ЕСТЬ: " + playlistMusicTrack.getMusicTrack().getTrackInfo() + " " + playlistMusicTrack.getNumber());
+        }
     }
 
     public void deleteFromPlayList(MusicTrack musicTrack) {
@@ -74,15 +83,20 @@ public class PlaylistService {
         renumeratePlayList();
     }
 
-    public void deleteByNumber(Integer number) {
+    public void deleteFromPlayListByNumber(int number) {
         session.beginTransaction();
-        Criteria criteria = session.createCriteria(MusicTrack.class);
-        MusicTrack findedTrack = (MusicTrack) criteria.add(Restrictions.eq("number", (long) number)).uniqueResult();
-        session.delete(findedTrack);
+        Criteria criteria = session.createCriteria(PlaylistMusicTrack.class);
+        criteria.add(Restrictions.eq("number", number));
+        PlaylistMusicTrack playlistMusicTrack = (PlaylistMusicTrack) criteria.uniqueResult();
+        System.out.printf("DELETED: %s with number:  from Playlist\n",
+                playlistMusicTrack.getMusicTrack().getTrackInfo());
+        playlistMusicTrack.setMusicTrack(null);
+        session.delete(playlistMusicTrack);
         session.getTransaction().commit();
-        System.out.println("DELETED: " + findedTrack.getTrackInfo());
         renumeratePlayList();
     }
+
+
 
 
     public List<PlaylistMusicTrack> findAll() {
@@ -92,7 +106,7 @@ public class PlaylistService {
     }
 
     public int getCountOfCompositions() {
-        BigInteger count = (BigInteger) session.createSQLQuery("select count('number') from music_track;")
+        BigInteger count = (BigInteger) session.createSQLQuery("select count('number') from playlist_music_track;")
                 .uniqueResult();
         return count.intValue();
     }
