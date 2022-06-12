@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import ru.dark.stream.entities.MusicTrack;
 import ru.dark.stream.entities.PlaylistMusicTrack;
+import ru.dark.stream.service.BaseSearchService;
 import ru.dark.stream.service.MusicTrackService;
 import ru.dark.stream.service.PlaylistService;
 
@@ -17,11 +18,12 @@ public class ServerMainApplicationTest {
 
 		ApplicationContext context = SpringApplication.run(ServerMainApplicationTest.class, args);
 
-		PlaylistService playlistservice = new PlaylistService();
-
-//		playlistservice.addToPlayList(musicTrack);
-		playlistservice.deleteFromPlayListByNumber(4);
-
+//		PlaylistService playlistservice = new PlaylistService();
+//
+////		playlistservice.addToPlayList(musicTrack);
+//		playlistservice.deleteFromPlayListByNumber(4);
+		BaseSearchService baseSearchService = context.getBean(BaseSearchService.class);
+		baseSearchService.searchTrackInBase("А мы не ангелы парень");
 	}
 
 

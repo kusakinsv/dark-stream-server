@@ -2,12 +2,9 @@ package ru.dark.stream.service;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.CriteriaQuery;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,11 +12,8 @@ import ru.dark.stream.HibernateUtil;
 import ru.dark.stream.entities.MusicTrack;
 import ru.dark.stream.entities.PlaylistMusicTrack;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigInteger;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @NoArgsConstructor
@@ -49,23 +43,28 @@ public class PlaylistService {
     public void addToPlayList(MusicTrack musicTrack) {
 
         PlaylistMusicTrack playlistMusicTrack = new PlaylistMusicTrack();
+        PlaylistMusicTrack findedplaylist = new PlaylistMusicTrack();
         MusicTrack trackForFound = null;
         trackForFound = musicTrackService.find(musicTrack);
-        if (trackForFound == null){
+        if (trackForFound == null) {
             playlistMusicTrack.setMusicTrack(musicTrack);
             playlistMusicTrack.setNumber(getCountOfCompositions() + 1);
             System.out.println("CREATED: " + playlistMusicTrack.getMusicTrack().getTrackInfo() + " " + playlistMusicTrack.getNumber());
-        }
-        else {
+        } else {
             playlistMusicTrack.setMusicTrack(trackForFound);
             playlistMusicTrack.setNumber(getCountOfCompositions() + 1);
             System.out.println("ДАННЫЙ ТРЕК УЖЕ ЕСТЬ: " + playlistMusicTrack.getMusicTrack().getTrackInfo() + " " + playlistMusicTrack.getNumber());
         }
-        PlaylistMusicTrack findedplaylist = find(playlistMusicTrack);
-        if (findedplaylist == null) findedplaylist=playlistMusicTrack;
+        try {
+            findedplaylist = find(playlistMusicTrack);
+        } catch (Exception e) {
+            findedplaylist = playlistMusicTrack;
+        }
         session.beginTransaction();
         session.save(findedplaylist);
         session.getTransaction().commit();
+
+
     }
 
     public PlaylistMusicTrack find(PlaylistMusicTrack playlistMusicTrack) {
@@ -118,7 +117,7 @@ public class PlaylistService {
         return count.intValue();
     }
 
-    public List<MusicTrack> getTracksFromPlayList(){
+    public List<MusicTrack> getTracksFromPlayList() {
 
         return null;
     }
