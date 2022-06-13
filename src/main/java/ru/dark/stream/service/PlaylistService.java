@@ -56,46 +56,19 @@ public class PlaylistService {
         }
         try {
             findedplaylist = find(playlistMusicTrack);
-            System.out.println(1111111);
+            if(findedplaylist == null){
+                findedplaylist = playlistMusicTrack;
+                session.beginTransaction();
+                session.save(findedplaylist);
+                session.getTransaction().commit();
+            }
         } catch (Exception e) {
-            findedplaylist = playlistMusicTrack;
-            System.out.println(2222222);
-        }
-        if(findedplaylist == null){
             findedplaylist = playlistMusicTrack;
             session.beginTransaction();
             session.save(findedplaylist);
             session.getTransaction().commit();
         }
     }
-
-//    public void addToPlayList(MusicTrack musicTrack) {
-//
-//        PlaylistMusicTrack playlistMusicTrack = new PlaylistMusicTrack();
-//        PlaylistMusicTrack findedplaylist;
-//        MusicTrack trackForFound = null;
-//        trackForFound = musicTrackService.find(musicTrack);
-//        if (trackForFound == null) {
-//            playlistMusicTrack.setMusicTrack(musicTrack);
-//            playlistMusicTrack.setNumber(getCountOfCompositions() + 1);
-//            System.out.println("CREATED: " + playlistMusicTrack.getMusicTrack().getTrackInfo() + " " + playlistMusicTrack.getNumber());
-//        } else {
-//            playlistMusicTrack.setMusicTrack(trackForFound);
-//            playlistMusicTrack.setNumber(getCountOfCompositions() + 1);
-//            System.out.println("ДАННЫЙ ТРЕК УЖЕ ЕСТЬ: " + playlistMusicTrack.getMusicTrack().getTrackInfo() + " " + playlistMusicTrack.getNumber());
-//        }
-//        try {
-//            findedplaylist = find(playlistMusicTrack);
-//            System.out.println(1111111);
-//        } catch (Exception e) {
-//            findedplaylist = playlistMusicTrack;
-//            System.out.println(2222222);
-//        }
-//        System.out.println(findedplaylist.toString());
-//        session.beginTransaction();
-//        session.save(findedplaylist);
-//        session.getTransaction().commit();
-//    }
 
     public PlaylistMusicTrack find(PlaylistMusicTrack playlistMusicTrack) {
         Criteria criteria = session.createCriteria(PlaylistMusicTrack.class);
