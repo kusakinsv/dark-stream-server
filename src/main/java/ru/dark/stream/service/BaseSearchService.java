@@ -1,8 +1,10 @@
 package ru.dark.stream.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import ru.dark.stream.entities.MusicTrack;
 
@@ -15,8 +17,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class BaseSearchService {
     MusicTrackRepository musicTrackRepository;
+    ObjectMapper objectMapper;
 
-    public void searchTrackInBase(String name) {
+    @SneakyThrows
+    public String searchTrackInBase(String name) {
         List<MusicTrack> musicTrackList = musicTrackRepository.findAll();
         List<MusicTrack> searched = new ArrayList<>();
         for (MusicTrack musicTrack : musicTrackList) {
@@ -24,6 +28,8 @@ public class BaseSearchService {
                 searched.add(musicTrack);
             }
         }
+
+        return objectMapper.writeValueAsString(searched);
     }
 
 

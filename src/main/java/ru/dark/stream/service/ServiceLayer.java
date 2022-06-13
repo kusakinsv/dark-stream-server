@@ -23,11 +23,6 @@ public class ServiceLayer {
     private final MusicTrackMapper musicTrackMapper;
     private final ObjectMapper objectMapper;
 
-
-    public void searchMusic() {
-
-    }
-
     public void addTrackToPlayList(MusicRequest musicRequest) {
         MusicTrack musicTrack = musicTrackMapper.toMusicTrack(musicRequest);
         playlistService.addToPlayList(musicTrack);
@@ -46,6 +41,8 @@ public class ServiceLayer {
         String writedObject = objectMapper.writeValueAsString(musicTracks);
         return writedObject;
     }
+
+
 
 
 }
