@@ -6,7 +6,7 @@
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/dark-stream</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/ds</property>
         <property name="hibernate.connection.username">admin</property>
         <property name="hibernate.connection.password">123450000</property>
         <property name="hbm2ddl.auto">update</property>
